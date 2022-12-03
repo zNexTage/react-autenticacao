@@ -5,18 +5,21 @@ import imagemPrincipal from './assets/login.png'
 
 import './ModalCadastroUsuario.css'
 
-const ModalCadastroUsuario = () => {
-    
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
-    const [address, setAddress] = useState('')
-    const [complement, setComplement] = useState('')
-    const [zipCode, setZipCode] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmedPassword, setConfirmedPassword] = useState('')
+import axios from 'axios';
 
-    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+const ModalCadastroUsuario = () => {
+
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [address, setAddress] = useState('');
+    const [complement, setComplement] = useState('');
+    const [zipCode, setZipCode] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmedPassword, setConfirmedPassword] = useState('');    
+
+    const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
         const user = {
             name,
             email,
@@ -25,8 +28,23 @@ const ModalCadastroUsuario = () => {
             zipCode,
             complement
         }
-        console.log(user)
-        alert('Usuário foi cadastrado com sucesso!')
+
+        try {
+            const response = await axios.post('http://localhost:8000/public/register', user);
+
+            setName('');
+            setEmail('');
+            setAddress('');
+            setComplement('');
+            setZipCode('');
+            setPassword('');
+            setConfirmedPassword('');
+
+            alert('Usuário foi cadastrado com sucesso!');
+        }
+        catch (err) {
+            alert('Ops! Ocorreu um erro e não foi possível salvar o usuário');
+        }
     }
 
     return (<AbModal
