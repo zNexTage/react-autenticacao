@@ -7,7 +7,12 @@ import './ModalCadastroUsuario.css'
 
 import axios from 'axios';
 
-const ModalCadastroUsuario = () => {
+interface IProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const ModalCadastroUsuario = ({ isOpen, onClose }: IProps) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
@@ -15,7 +20,7 @@ const ModalCadastroUsuario = () => {
     const [complement, setComplement] = useState('');
     const [zipCode, setZipCode] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmedPassword, setConfirmedPassword] = useState('');    
+    const [confirmedPassword, setConfirmedPassword] = useState('');
 
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -30,7 +35,7 @@ const ModalCadastroUsuario = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/public/register', user);
+            const response = await axios.post('http://localhost:8000/public/registrar', user);
 
             setName('');
             setEmail('');
@@ -49,8 +54,8 @@ const ModalCadastroUsuario = () => {
 
     return (<AbModal
         titulo="Cadastrar"
-        aberta={true}
-        aoFechar={() => console.log('fecha ai')}
+        aberta={isOpen}
+        aoFechar={onClose}
     >
         <section className="corpoModalCadastro">
             <figure>
