@@ -6,79 +6,79 @@ import imagemPrincipal from './assets/login.png'
 import './ModalCadastroUsuario.css'
 
 const ModalCadastroUsuario = () => {
-
-    const [nome, setNome] = useState('')
+    
+    const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [endereco, setEndereco] = useState('')
-    const [complemento, setComplemento] = useState('')
-    const [cep, setCep] = useState('')
-    const [senha, setSenha] = useState('')
-    const [senhaConfirmada, setSenhaConfirmada] = useState('')
+    const [address, setAddress] = useState('')
+    const [complement, setComplement] = useState('')
+    const [zipCode, setZipCode] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmedPassword, setConfirmedPassword] = useState('')
 
-    const aoSubmeterFormulario = (evento: React.FormEvent<HTMLFormElement>) => {
-        evento.preventDefault()
-        const usuario = {
-            nome,
+    const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const user = {
+            name,
             email,
-            senha,
-            endereco,
-            cep,
-            complemento
+            password,
+            address,
+            zipCode,
+            complement
         }
-        console.log(usuario)
+        console.log(user)
         alert('Usuário foi cadastrado com sucesso!')
     }
 
-    return (<AbModal 
-        titulo="Cadastrar" 
+    return (<AbModal
+        titulo="Cadastrar"
         aberta={true}
-        aoFechar={() => console.log('fecha ai')}    
+        aoFechar={() => console.log('fecha ai')}
     >
         <section className="corpoModalCadastro">
             <figure>
                 <img src={imagemPrincipal} alt="Pessoa segurando uma chave na frente de uma tela de computador que está exibindo uma fechadura" />
             </figure>
-            <form onSubmit={aoSubmeterFormulario}>
-                <AbCampoTexto 
+            <form onSubmit={onSubmit}>
+                <AbCampoTexto
                     label="Nome"
-                    value={nome}
-                    onChange={setNome}
+                    value={name}
+                    onChange={setName}
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="E-mail"
                     value={email}
                     onChange={setEmail}
                     type="email"
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="Endereço"
-                    value={endereco}
-                    onChange={setEndereco}
+                    value={address}
+                    onChange={setAddress}
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="Complemento"
-                    value={complemento}
-                    onChange={setComplemento}
+                    value={complement}
+                    onChange={setComplement}
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="CEP"
-                    value={cep}
-                    onChange={setCep}
+                    value={zipCode}
+                    onChange={setZipCode}
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="Senha"
-                    value={senha}
-                    onChange={setSenha}
+                    value={password}
+                    onChange={setPassword}
                     type="password"
                 />
-                <AbCampoTexto 
+                <AbCampoTexto
                     label="Confirmação da senha"
-                    value={senhaConfirmada}
-                    onChange={setSenhaConfirmada}
+                    value={confirmedPassword}
+                    onChange={setConfirmedPassword}
                     type="password"
                 />
                 <div className="acoes">
-                    <AbBotao texto="Cadastrar"/>
+                    <AbBotao texto="Cadastrar" />
                 </div>
             </form>
         </section>
