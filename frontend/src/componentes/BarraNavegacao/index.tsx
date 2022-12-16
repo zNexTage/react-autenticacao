@@ -2,12 +2,15 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import BotaoNavegacao from "../BotaoNavegacao"
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
+import ModalLogin from "../ModalLogin"
 import logo from './assets/logo.png'
 import usuario from './assets/usuario.svg'
 import './BarraNavegacao.css'
 
 const BarraNavegacao = () => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
+    const [isModalLogin, setIsModalLogin] = useState(false);
+
 
     return (<nav className="ab-navbar">
         <h1 className="logo">
@@ -49,18 +52,26 @@ const BarraNavegacao = () => {
         </ul>
         <ul className="acoes">
             <li>
-                <BotaoNavegacao texto="Login" textoAltSrc="Icone representando um usuário" imagemSrc={usuario} />
+                <BotaoNavegacao
+                    onClick={() => setIsModalLogin(true)}
+                    texto="Login"
+                    textoAltSrc="Icone representando um usuário"
+                    imagemSrc={usuario} />
             </li>
             <li>
                 <BotaoNavegacao
                     texto="Cadastrar-se"
                     textoAltSrc="Icone representando um usuário"
                     imagemSrc={usuario}
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => setIsModalRegisterOpen(true)}
                 />
                 <ModalCadastroUsuario
-                    onClose={() => setIsOpen(false)}
-                    isOpen={isOpen} />
+                    onClose={() => setIsModalRegisterOpen(false)}
+                    isOpen={isModalRegisterOpen} />
+                <ModalLogin
+                    isOpen={isModalLogin}
+                    onClose={() => setIsModalLogin(false)}
+                />
             </li>
         </ul>
     </nav>)
