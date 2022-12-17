@@ -8,9 +8,10 @@ import useUserSession from "../../hooks/useUserSession";
 interface IProps {
     isOpen: boolean;
     onClose: () => void;
+    onLogin: () => void;
 }
 
-const ModalLogin = ({ isOpen, onClose }: IProps) => {
+const ModalLogin = ({ isOpen, onClose, onLogin }: IProps) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { saveToken } = useUserSession();
@@ -33,7 +34,7 @@ const ModalLogin = ({ isOpen, onClose }: IProps) => {
             setEmail('');
             setPassword('');
 
-            onClose();
+            onLogin();
         }
         catch (e: any) {
             if (e?.response?.data?.message) {

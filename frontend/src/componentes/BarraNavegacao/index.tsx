@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import useUserSession from "../../hooks/useUserSession"
 import BotaoNavegacao from "../BotaoNavegacao"
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
 import ModalLogin from "../ModalLogin"
@@ -10,6 +11,10 @@ import './BarraNavegacao.css'
 const BarraNavegacao = () => {
     const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
     const [isModalLogin, setIsModalLogin] = useState(false);
+
+    const { getToken } = useUserSession();
+
+    const [isAutenticate, setIsAutenticate] = useState<boolean>(getToken() != null);
 
 
     return (<nav className="ab-navbar">
@@ -51,28 +56,45 @@ const BarraNavegacao = () => {
             </li>
         </ul>
         <ul className="acoes">
-            <li>
-                <BotaoNavegacao
-                    onClick={() => setIsModalLogin(true)}
-                    texto="Login"
-                    textoAltSrc="Icone representando um usuário"
-                    imagemSrc={usuario} />
-            </li>
-            <li>
-                <BotaoNavegacao
-                    texto="Cadastrar-se"
-                    textoAltSrc="Icone representando um usuário"
-                    imagemSrc={usuario}
-                    onClick={() => setIsModalRegisterOpen(true)}
-                />
-                <ModalCadastroUsuario
-                    onClose={() => setIsModalRegisterOpen(false)}
-                    isOpen={isModalRegisterOpen} />
-                <ModalLogin
-                    isOpen={isModalLogin}
-                    onClose={() => setIsModalLogin(false)}
-                />
-            </li>
+            {
+                !isAutenticate &&
+                <>
+                    <li>
+                        <BotaoNavegacao
+                            onClick={() => setIsModalLogin(true)}
+                            texto="Login"
+                            textoAltSrc="Icone representando um usuário"
+                            imagemSrc={usuario} />
+                    </li>
+                    <li>
+                        <BotaoNavegacao
+                            texto="Cadastrar-se"
+                            textoAltSrc="Icone representando um usuário"
+                            imagemSrc={usuario}
+                            onClick={() => setIsModalRegisterOpen(true)}
+                        />
+                        <ModalCadastroUsuario
+                            onClose={() => setIsModalRegisterOpen(false)}
+                            isOpen={isModalRegisterOpen} />
+                        <ModalLogin
+                            onLogin={() => {
+                                setIsModalLogin(false);
+                                setIsAutenticate(true);
+                            }}
+                            isOpen={isModalLogin}
+                            onClose={() => setIsModalLogin(false)}
+                        />
+                    </li>
+                </>
+            }
+            {
+                isAutenticate &&
+                <li>
+                    <Link to="/minha-conta/pedidos">
+                        Minha conta
+                    </Link>
+                </li>
+            }
         </ul>
     </nav>)
 }
