@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import useUserSession from "./useUserSession";
 
 const useHttp = () => {
@@ -27,7 +27,17 @@ const useHttp = () => {
         }
 
         return config;
-    }, (error) => { // called when request fail
+    }, (error: AxiosError) => { // called when request fail
+        /**
+         * NOTE: In this block, we can check the response status code: 
+         * Example: if (error.response?.status === 401)
+         * We can redirect the user:
+         * 
+         *  if (error.response?.status === 401) {
+                history.push('/') 
+                return Promise.reject()
+            }
+         */
         console.log(`Interceptor fail: ${error}`);
 
         return Promise.reject(error);
