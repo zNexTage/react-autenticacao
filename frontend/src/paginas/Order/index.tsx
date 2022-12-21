@@ -19,11 +19,7 @@ const Order = () => {
         const token = getToken();
 
         try {
-            const response = await client.get<Array<OrderDTO>>('pedidos', {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
+            const response = await client.get<Array<OrderDTO>>('pedidos');
 
             const orders: Array<IOrder> = [];
 
