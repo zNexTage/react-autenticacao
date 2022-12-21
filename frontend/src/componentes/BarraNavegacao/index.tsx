@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import useUserSession from "../../hooks/useUserSession"
 import BotaoNavegacao from "../BotaoNavegacao"
 import ModalCadastroUsuario from "../ModalCadastroUsuario"
@@ -12,9 +12,18 @@ const BarraNavegacao = () => {
     const [isModalRegisterOpen, setIsModalRegisterOpen] = useState(false);
     const [isModalLogin, setIsModalLogin] = useState(false);
 
-    const { getToken } = useUserSession();
+    const { getToken, deleteToken } = useUserSession();
 
     const [isAutenticate, setIsAutenticate] = useState<boolean>(getToken() != null);
+
+    const navigate = useNavigate();
+
+    const logout = () => {
+        deleteToken(); //Remove token from session
+        setIsAutenticate(false);
+
+        navigate('/'); //Redirects to the home page
+    }
 
 
     return (<nav className="ab-navbar">
@@ -89,11 +98,21 @@ const BarraNavegacao = () => {
             }
             {
                 isAutenticate &&
-                <li>
-                    <Link to="/minha-conta/pedidos">
-                        Minha conta
-                    </Link>
-                </li>
+                <>
+                    <li>
+                        <Link to="/minha-conta/pedidos">
+                            Minha conta
+                        </Link>
+                    </li>
+                    <li>
+                        <BotaoNavegacao
+                            texto="Logout"
+                            imagemSrc={usuario}
+                            textoAltSrc="Ícone representando um usuário"
+                            onClick={logout}
+                        />
+                    </li>
+                </>
             }
         </ul>
     </nav>)
