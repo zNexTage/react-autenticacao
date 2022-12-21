@@ -1,12 +1,24 @@
 import IOrder from "../interfaces/IOrder";
 
 class OrderDTO {
-    public static createOrder(id: number, data: string, entrega: string, total: number): IOrder {
+    private id: number;
+    private data: string;
+    private entrega: string;
+    private total: number;
+
+    constructor(id: number, data: string, entrega: string, total: number) {
+        this.id = id;
+        this.data = data;
+        this.entrega = entrega;
+        this.total = total;
+    }
+
+    public static createOrder(orderDto: OrderDTO): IOrder {
         return {
-            id,
-            deliveryDate: new Date(entrega),
-            date: new Date(data),
-            total
+            id: orderDto.id,
+            deliveryDate: new Date(orderDto.entrega),
+            date: new Date(orderDto.data),
+            total: orderDto.total
         }
     }
 
