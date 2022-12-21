@@ -5,7 +5,7 @@ import imagemPrincipal from './assets/login.png'
 
 import './ModalCadastroUsuario.css'
 
-import axios from 'axios';
+import useHttp from "../../hooks/useHttp";
 
 interface IProps {
     isOpen: boolean;
@@ -22,6 +22,8 @@ const ModalCadastroUsuario = ({ isOpen, onClose }: IProps) => {
     const [password, setPassword] = useState('');
     const [confirmedPassword, setConfirmedPassword] = useState('');
 
+    const client = useHttp();
+
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -35,7 +37,7 @@ const ModalCadastroUsuario = ({ isOpen, onClose }: IProps) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/public/registrar', user);
+            await client.post('public/registrar', user);
 
             setName('');
             setEmail('');

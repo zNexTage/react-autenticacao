@@ -1,16 +1,17 @@
 import { AbBotao } from "ds-alurabooks";
-import style from "./style.module.css";
-
-import axios from 'axios';
 import { useEffect, useState } from "react";
 import useUserSession from "../../hooks/useUserSession";
 import OrderDTO from "../../dto/OrderDto";
 import IOrder from "../../interfaces/IOrder";
 import numberFormat from "../../utils/format/number-format";
+import useHttp from "../../hooks/useHttp";
+import style from "./style.module.css";
 
 const Order = () => {
 
     const { getToken } = useUserSession();
+
+    const client = useHttp();
 
     const [orders, setOrders] = useState<Array<IOrder>>([]);
 
@@ -18,7 +19,7 @@ const Order = () => {
         const token = getToken();
 
         try {
-            const response = await axios.get<Array<OrderDTO>>('http://localhost:8000/pedidos', {
+            const response = await client.get<Array<OrderDTO>>('pedidos', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

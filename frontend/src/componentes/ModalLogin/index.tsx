@@ -2,8 +2,8 @@ import { AbBotao, AbCampoTexto, AbModal } from "ds-alurabooks";
 import '../ModalCadastroUsuario/ModalCadastroUsuario.css';
 import imagemPrincipal from '../ModalCadastroUsuario/assets/login.png'
 import { useState } from "react";
-import axios from "axios";
 import useUserSession from "../../hooks/useUserSession";
+import useHttp from "../../hooks/useHttp";
 
 interface IProps {
     isOpen: boolean;
@@ -16,6 +16,8 @@ const ModalLogin = ({ isOpen, onClose, onLogin }: IProps) => {
     const [password, setPassword] = useState("");
     const { saveToken } = useUserSession();
 
+    const client = useHttp();
+
     const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -25,7 +27,7 @@ const ModalLogin = ({ isOpen, onClose, onLogin }: IProps) => {
         };
 
         try {
-            const response = await axios.post('http://localhost:8000/public/login', user);
+            const response = await client.post('public/login', user);
 
             const token = response.data['access_token'];
 
