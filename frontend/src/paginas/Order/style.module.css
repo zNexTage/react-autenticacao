@@ -1,0 +1,16 @@
+.OrderContainer {
+    padding: 20px;
+}
+
+.Order {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 1px solid #002F52;
+    padding-bottom: 20px;
+    margin-top: 60px;
+}
+
+.Order  p {
+    margin: 0;
+}
